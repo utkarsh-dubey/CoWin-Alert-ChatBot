@@ -19,8 +19,8 @@ def make_reply(msg=""):
         reply=[]
         for i in dict["sessions"]:
             temp=[]
-            if(i["available_capacity"]<3):
-                continue
+            # if(i["available_capacity"]<3):
+            #     continue
 
             temp.append("Centre Name - "+str(i["name"]))
             temp.append("District Name - "+str(i["district_name"]))
