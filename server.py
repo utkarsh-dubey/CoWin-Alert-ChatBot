@@ -5,8 +5,8 @@ from time import sleep
 bot=telegram_chatbot("config.cfg")
 update_id=None
 
-def make_reply(msg=""):
-    url="https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=149&date=13-05-2021"
+def make_reply(url):
+    
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     data = urlopen(req).read()
     if(data==None or data==""):
@@ -19,8 +19,8 @@ def make_reply(msg=""):
         reply=[]
         for i in dict["sessions"]:
             temp=[]
-            # if(i["available_capacity"]<3):
-            #     continue
+            if(i["min_age_limit"]!=18):
+                continue
 
             temp.append("Centre Name - "+str(i["name"]))
             temp.append("District Name - "+str(i["district_name"]))
@@ -33,28 +33,46 @@ def make_reply(msg=""):
         reply=""
     return reply
 
-
+prev=[]
+prev2=[]
 while True:
-	sleep(4)
-    prev=[]
+    sleep(4)
+    
     print("...")
-    reply=make_reply()
-    if(prev==reply):
+    url1="https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=149&date=13-05-2021"
+    url2="https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=145&date=13-05-2021"
+    reply=make_reply(url1)
+    sleep(4)
+    reply2=make_reply(url2)
+    if(prev==reply and prev2==reply2):
         sleep(15)
 
-    if(reply==""):
+    if(reply=="" and reply2==""):
         continue
     replystr=""
+    replystr2=""
     for i in reply:
         for j in i:
             replystr+=(j+'\n')
         replystr+="\n\n"
+    for i in reply2:
+        for j in i:
+            replystr2+=(j+'\n')
+        replystr2+="\n\n"
     
     id1=730962429
     id2=793329729
-    bot.send_message(replystr,id1)
-    bot.send_message(replystr,id2)
+    id3=1099803385
+    if(replystr!=""):
+        bot.send_message(replystr,id1)
+        bot.send_message(replystr,id2)
+        bot.send_message(replystr,id3)
+    if(replystr2!=""):
+        bot.send_message(replystr2,id1)
+        bot.send_message(replystr2,id3)
+
     prev=reply
+    prev2=reply2
 
     # updates=bot.get_updates(offset=update_id)
     # updates=updates["result"]
