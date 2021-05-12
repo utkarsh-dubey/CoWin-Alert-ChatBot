@@ -1,7 +1,7 @@
 from bot import telegram_chatbot 
-# from urllib.request import Request, urlopen
-from urllib2 import urlopen
-from urllib2 import Request
+from urllib.request import Request, urlopen
+# from urllib2 import urlopen
+# from urllib2 import Request
 import json
 from time import sleep
 bot=telegram_chatbot("config.cfg")
