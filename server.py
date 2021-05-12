@@ -35,6 +35,7 @@ def make_reply(msg=""):
 
 
 while True:
+	sleep(4)
     prev=[]
     print("...")
     reply=make_reply()
