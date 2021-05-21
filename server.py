@@ -93,10 +93,7 @@ while True:
     dicy["southdelhi"]=southdelhi
     dicy["eastdelhi"]=eastdelhi
     dicy["northwestdelhi"]=northwestdelhi
-    id1=730962429
-    id2=793329729
-    id3=1099803385
-    id4=1489029276
+
     print(bot.get_updates)
     file=open('bot.txt','r')
     users=json.loads(file.read())
