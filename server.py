@@ -2,6 +2,7 @@ from bot import telegram_chatbot
 from urllib.request import Request, urlopen
 import requests
 import random
+import json
 import datetime
 # from urllib2 import urlopen
 # from urllib2 import Request
@@ -73,36 +74,51 @@ while True:
 
     if(reply=="" and reply2=="" and reply3==""):
         continue
-    replystr=""
-    replystr2=""
-    replystr3=""
+    southdelhi=""
+    eastdelhi=""
+    northwestdelhi=""
     for i in reply:
         for j in i:
-            replystr+=(j+'\n')
-        replystr+="\n\n"
+            southdelhi+=(j+'\n')
+        southdelhi+="\n\n"
     for i in reply2:
         for j in i:
-            replystr2+=(j+'\n')
-        replystr2+="\n\n"
+            eastdelhi+=(j+'\n')
+        eastdelhi+="\n\n"
     for i in reply3:
         for j in i:
-            replystr3+=(j+'\n')
-        replystr3+="\n\n"
-    
+            northwestdelhi+=(j+'\n')
+        northwestdelhi+="\n\n"
+    dicy={}
+    dicy["southdelhi"]=southdelhi
+    dicy["eastdelhi"]=eastdelhi
+    dicy["northwestdelhi"]=northwestdelhi
     id1=730962429
     id2=793329729
     id3=1099803385
     id4=1489029276
-    if(replystr!=""):
-        bot.send_message(replystr,id1)
-        bot.send_message(replystr,id2)
-        bot.send_message(replystr,id3)
-    if(replystr2!=""):
-        bot.send_message(replystr2,id1)
-        bot.send_message(replystr2,id3)
-    if(replystr3!=""):
-        bot.send_message(replystr3,id2)
-        bot.send_message(replystr3,id4)
+    print(bot.get_updates)
+    file=open('bot.txt','r')
+    users=json.loads(file.read())
+    for i in users:
+        for j in users[i]:
+            if j in dicy:
+                if(dicy[j]!=""):
+                    print(dicy[j])
+                    print(i)
+                    op=int(i)
+                    bot.send_message(dicy[j],i)
+        print(i)
+##    if(southdelhi!=""):
+##        bot.send_message(southdelhi,id1)
+##        bot.send_message(southdelhi,id2)
+##        bot.send_message(southdelhi,id3)
+##    if(eastdelhi!=""):
+##        bot.send_message(eastdelhi,id1)
+##        bot.send_message(eastdelhi,id3)
+##    if(northwestdelhi!=""):
+##        bot.send_message(northwestdelhi,id2)
+##        bot.send_message(northwestdelhi,id4)
 
     prev=reply
     prev2=reply2
